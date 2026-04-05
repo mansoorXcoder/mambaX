@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 CineLog — Movie Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-left">
+      <span class="logo">🎬 CineLog</span>
+    </div>
+    <div class="header-right">
+      <button id="themeToggle" class="icon-btn" title="Toggle theme">🌙</button>
+    </div>
+  </header>
+
+  <!-- ── MAIN WRAPPER ───────────────────────────────────── -->
+  <main class="app-wrapper">
+
+    <!-- ── USER PANEL ──────────────────────────────────── -->
+    <section class="glass-card user-panel">
+      <h2 class="section-title">👤 User</h2>
+      <div class="user-row">
+        <select id="userSelect" class="input-field"></select>
+        <button class="btn btn-ghost" id="addUserBtn">+ Add User</button>
+        <button class="btn btn-danger" id="deleteUserBtn">🗑 Delete</button>
+      </div>
+      <!-- inline add-user form (hidden by default) -->
+      <div id="addUserForm" class="inline-form hidden">
+        <input type="text" id="newUserName" class="input-field" placeholder="Enter name…" />
+        <button class="btn btn-accent" id="confirmAddUser">Add</button>
+        <button class="btn btn-ghost" id="cancelAddUser">Cancel</button>
+      </div>
+    </section>
+
+    <!-- ── STATS BAR ────────────────────────────────────── -->
+    <section class="stats-bar" id="statsBar">
+      <div class="stat-pill"><span id="statTotal">0</span><label>Total</label></div>
+      <div class="stat-pill"><span id="statWatched">0</span><label>Watched</label></div>
+      <div class="stat-pill"><span id="statWatching">0</span><label>Watching</label></div>
+      <div class="stat-pill"><span id="statPlan">0</span><label>Planned</label></div>
+      <div class="stat-pill"><span id="statFav">0</span><label>Favourites</label></div>
+    </section>
+
+    <!-- ── SEARCH + FILTERS ────────────────────────────── -->
+    <section class="glass-card filter-bar">
+      <input type="text" id="searchInput" class="input-field search-field" placeholder="🔍  Search title…" />
+      <select id="filterType" class="input-field">
+        <option value="">All Types</option>
+        <option value="Movie">Movie</option>
+        <option value="Series">Series</option>
+        <option value="Anime">Anime</option>
+      </select>
+      <select id="filterStatus" class="input-field">
+        <option value="">All Status</option>
+        <option value="Watched">Watched</option>
+        <option value="Watching">Watching</option>
+        <option value="Plan to Watch">Plan to Watch</option>
+      </select>
+      <button class="btn btn-accent" id="openAddModal">＋ Add Movie</button>
+    </section>
+
+    <!-- ── MOVIE GRID ───────────────────────────────────── -->
+    <section class="movie-grid" id="movieGrid">
+      <!-- Cards injected by JS -->
+    </section>
+
+    <div id="emptyState" class="empty-state hidden">
+      <p>🎞 No movies yet — add your first one!</p>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ADD / EDIT MODAL
+  ════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="movieModal">
+    <div class="modal glass-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Movie</h2>
+        <button class="icon-btn" id="closeModal">✕</button>
+      </div>
+
+      <form id="movieForm" class="movie-form" autocomplete="off">
+        <input type="hidden" id="editId" />
+
+        <div class="form-grid">
+          <!-- Required -->
+          <div class="form-group span2">
+            <label>Title <span class="req">*</span></label>
+            <input type="text" id="fTitle" class="input-field" placeholder="e.g. Inception" required />
+          </div>
+
+          <div class="form-group">
+            <label>Type <span class="req">*</span></label>
+            <select id="fType" class="input-field" required>
+              <option value="">— Select —</option>
+              <option value="Movie">Movie</option>
+              <option value="Series">Series</option>
+              <option value="Anime">Anime</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status <span class="req">*</span></label>
+            <select id="fStatus" class="input-field" required>
+              <option value="">— Select —</option>
+              <option value="Watched">Watched</option>
+              <option value="Watching">Watching</option>
+              <option value="Plan to Watch">Plan to Watch</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Rating <span class="req">*</span> <span id="ratingDisplay" class="rating-display">5</span>/10</label>
+            <input type="range" id="fRating" min="1" max="10" value="5" class="range-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Genre</label>
+            <input type="text" id="fGenre" class="input-field" placeholder="e.g. Sci-Fi, Action" />
+          </div>
+
+          <div class="form-group">
+            <label>Platform</label>
+            <input type="text" id="fPlatform" class="input-field" placeholder="e.g. Netflix, Prime" />
+          </div>
+
+          <div class="form-group">
+            <label>Episodes</label>
+            <input type="number" id="fEpisodes" class="input-field" placeholder="0" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label>Rewatch Count</label>
+            <input type="number" id="fRewatch" class="input-field" placeholder="0" min="0" />
+          </div>
+
+          <div class="form-group span2">
+            <label>Poster URL</label>
+            <input type="url" id="fPoster" class="input-field" placeholder="https://…" />
+          </div>
+
+          <div class="form-group span2">
+            <label>Notes</label>
+            <textarea id="fNotes" class="input-field" rows="3" placeholder="Your thoughts…"></textarea>
+          </div>
+
+          <div class="form-group span2 fav-row">
+            <label class="toggle-label">
+              <input type="checkbox" id="fFav" />
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              Mark as Favourite ❤️
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-accent" id="submitMovieBtn">Save Movie</button>
+          <button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Firebase SDK (v9 compat mode) ───────────────────── -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
