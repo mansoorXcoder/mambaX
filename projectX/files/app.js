@@ -19,7 +19,7 @@
    ───────────────────────────────────────────────────────── */
 
 const firebaseConfig = {
-  apiKey:            "AIzaSyA-_8OmY4BFxQPqEa9hWb1ItvACPDPup5c",
+  apiKey:            "AIzaSyA-_8OmY4BFxQPqEa9hWb1ItvACPDPup5cXX",
   authDomain:        "movie-tracker-web-app-4bdec.firebaseapp.com",
   projectId:         "movie-tracker-web-app-4bdec",
   storageBucket:     "movie-tracker-web-app-4bdec.firebasestorage.app",
