@@ -1,0 +1,66 @@
+FinalYearProject/
+│
+├── datasets/
+│   │
+│   ├── metadata/
+│   │   ├── train.csv
+│   │   └── dataset_information.csv
+│   │
+│   ├── raw_tiff/
+│   │   ├── 8242609fa.tiff
+│   │   ├── aaa6a05cc.tiff
+│   │   └── cb2d976f4.tiff
+│   │
+│   ├── generated_masks/
+│   │
+│   ├── extracted_patches/
+│   │   ├── images/
+│   │   └── masks/
+│   │
+│   └── processed_dataset/
+│       ├── train/
+│       │   ├── images/
+│       │   └── masks/
+│       │
+│       ├── val/
+│       │   ├── images/
+│       │   └── masks/
+│       │
+│       └── test/
+│           ├── images/
+│           └── masks/
+│
+├── preprocessing/
+│   ├── decode_rle.py
+│   ├── generate_masks.py
+│   ├── extract_patches.py
+│   ├── filter_patches.py
+│   └── build_dataset.py
+│
+├── models/
+│   │
+│   ├── unet/
+│   │   ├── dataset.py
+│   │   ├── model.py
+│   │   ├── train_unet.py
+│   │   └── test_unet.py
+│   │
+│   ├── attention_unet/
+│   │   ├── dataset.py
+│   │   ├── model.py
+│   │   ├── train_attention_unet.py
+│   │   └── test_attention_unet.py
+│   │
+│   ├── mamba_unet/
+│   │
+│   └── checkpoints/
+│
+├── notebooks/
+│
+├── outputs/
+│   ├── prediction_masks/
+│   ├── overlays/
+│   └── visualizations/
+│
+├── README.md
+└── requirements.txt

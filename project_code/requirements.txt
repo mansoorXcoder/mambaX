@@ -1,0 +1,15 @@
+torch
+torchvision
+numpy
+pandas
+matplotlib
+opencv-python
+Pillow
+tifffile
+scikit-image
+scikit-learn
+albumentations
+tqdm
+
+# Install all required packages using:
+# pip install -r requirements.txt
