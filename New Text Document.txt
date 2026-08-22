@@ -1,0 +1,135 @@
+Sure. Before you leave, here's the **exact roadmap** so we can continue from the same point next time.
+
+### Current status
+
+```text
+Stage 1 — Paper Detection          ✅
+Stage 1 — Master JSON              ✅
+Stage 1 — Metadata extraction      🔧 fixing
+Stage 2 — PDF text extraction      ⏳
+Stage 2 — Chunking                 ⏳
+Stage 2 — Embeddings               ⏳
+Stage 2 — Local Vector DB          ⏳
+Stage 3 — Question answering       ⏳
+Stage 3 — Cross-paper analysis     ⏳
+Stage 3 — Gap detection            ⏳
+Stage 4 — JSON reports             ⏳
+Stage 4 — DOCX reports             ⏳
+Stage 5 — New-paper automation     ⏳
+```
+
+### Next session — start here
+
+**1. Finish metadata**
+
+Update `extract_metadata.py` with the two changes I gave you:
+
+```python
+import pymupdf
+```
+
+and:
+
+```python
+"metadata_version": 2
+```
+
+Then run:
+
+```bat
+python src\stage1\extract_metadata.py
+```
+
+and:
+
+```bat
+python src\stage1\check_metadata.py
+```
+
+---
+
+**2. Once metadata is correct, freeze Stage 1.**
+
+We won't keep modifying it unnecessarily.
+
+---
+
+**3. Build the actual RAG pipeline**
+
+We'll create:
+
+```text
+src/
+├── stage1/
+│   ├── paper_detector.py
+│   ├── paper_metadata.py
+│   └── extract_metadata.py
+│
+├── stage2/
+│   ├── pdf_reader.py
+│   ├── chunker.py
+│   ├── embeddings.py
+│   └── vector_store.py
+│
+├── stage3/
+│   ├── question_answer.py
+│   └── gap_analysis.py
+│
+└── stage4/
+    └── exporter.py
+```
+
+The important part is that **only new/changed papers get processed**.
+
+For example:
+
+```text
+11 papers
+   ↓
+processed once
+   ↓
+Vector DB
+
+Add paper #12
+   ↓
+detect new hash
+   ↓
+process ONLY #12
+   ↓
+add #12 to Vector DB
+```
+
+Then when you ask:
+
+```text
+"What are the research gaps in blockchain-based
+identity management?"
+```
+
+the system searches the relevant papers instead of sending all PDFs to the model.
+
+Finally:
+
+```text
+Question
+   ↓
+Retriever
+   ↓
+Relevant chunks
+   ↓
+Local LLM
+   ↓
+Answer
+   ↓
+Gap analysis
+   ↓
+JSON + DOCX
+```
+
+And all generated material will go under your existing:
+
+```text
+research_papers\saved\
+```
+
+**No need to create anything else tonight.** Your next action is simply to finish the metadata fix, and next time we start with **Stage 2: PDF extraction + chunking**.
